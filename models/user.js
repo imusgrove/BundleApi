@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
         validate:{
             isEmail: true
         }
-    }
+    }, 
+    
 })
 return Users;
 }

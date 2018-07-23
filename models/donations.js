@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         misc_items: {
             type: DataTypes.STRING
+        },
+        Model: associate = (models) => {
+            donations.belongsTo(models.donors);
         }
     })
     return Donations;
