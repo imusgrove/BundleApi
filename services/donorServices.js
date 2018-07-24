@@ -1,10 +1,9 @@
 var sequelize = require('../db');
 const Donor = sequelize.import('../models/donors')
+
 //get all donors
 exports.getAll = function() {
-    return donor.findAll({
-
-    })
+    return donor.findAll()
 }
 //get one donor
 exports.getOneDonor = function(req, id){
@@ -13,7 +12,16 @@ exports.getOneDonor = function(req, id){
             id:req.params.id
         }
     })
+    .then(
+        function findOneSuccess(data) {
+            res.json(data);
+        },
+        function findOneError(err) {
+            res.send(500, err.message);
+        }
+    );
 }
+
 //create donors
 exports.createDonor = function(req){
     return donor.create({
@@ -26,6 +34,16 @@ exports.createDonor = function(req){
         donor_phoneNumber: req.body.donor.donor_phoneNumber,
         donor_contactName: req.body.donor.donor_contactName
     })
+    .then(
+        function createSuccess(job) {
+            res.json({
+                donor: donor
+            });            
+        },
+        function createError(err){
+            res.send(500, err.message);
+        }
+    );
 }
 //edit donors
 exports.editDonor = function(req, id){
@@ -40,10 +58,28 @@ exports.editDonor = function(req, id){
         donor_contactName: req.body.donor.donor_contactName
     },
     {where: {id: req.params.id}})
+    .then(
+        function updateSuccess(job) {
+            res.json({
+                donor: donor
+            });            
+        },
+        function updateError(err){
+            res.send(500, err.message);
+        }
+    );
 }
 //delete donors
 exports.deleteDonor = function(req ,id){
     return donor.destroy({
         where:{ id:req.params.id}
     })
+    .then(
+        function deleteSuccess(data) {
+            res.send("Donor successfully deleted");
+        },
+        function deleteError(err){
+            res.send(500, err.message);
+        }
+    );
 }
