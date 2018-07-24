@@ -9,8 +9,8 @@ const cors = require('cors')
 app.use(cors())
 sequelize.sync();
 app.use(bodyParser.json())
-app.use('/user', require('./controllers/usercontroller'))
 app.use(require('./middleware/validate-session'))
+app.use('/user', require('./controllers/usercontroller'))
 app.use('./donor', require('./controllers/donorcontroller'))
 app.use('./donation', require('./controllers/donationcontroller'))
 
