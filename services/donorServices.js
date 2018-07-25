@@ -1,5 +1,5 @@
 var sequelize = require('../db');
-const donor = sequelize.import('../models/donors')
+const donor = sequelize.import('../models/donors');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
@@ -8,7 +8,7 @@ exports.getAll = function() {
     return donor.findAll()
 }
 //get one donor
-exports.getOneDonor = function(req, id){
+exports.getOneDonor = function(req, id) {
     return donor.findOne({
         where: {
             id:req.params.id
@@ -31,15 +31,18 @@ exports.createDonor = function(req,res){
     var donor_email = req.body.donor_email;
     var donor_address = req.body.donor_address;
     var donor_city = req.body.donor_city;
+    var donor_state = req.body.donor_state;
     var donor_zipCode = req.body.donor_zipCode;
     var donor_phoneNumber = req.body.donor_phoneNumber;
     var donor_contactName = req.body.donor_contactName;
-    return donor.create({
+    return donor
+    .create({
         donor_username : donor_username,
         donor_password : bcrypt.hashSync(donor_password, 10),
         donor_email : donor_email,
         donor_address : donor_address,
         donor_city: donor_city,
+        donor_state: donor_state,
         donor_zipCode: donor_zipCode,
         donor_phoneNumber: donor_phoneNumber,
         donor_contactName: donor_contactName
@@ -55,10 +58,12 @@ exports.createDonor = function(req,res){
             sessionToken: token
           });
         },
-        function createError(err) {
-          res.status(500).send(err.message);
-        }
-      );
+        
+      )
+      .catch (function createError(err) {
+        res.status(500).send(err.message);
+        console.log((err.message))
+      })
     } 
 
 //edit donors

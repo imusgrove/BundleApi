@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
- 
-  const Donor = sequelize.define('donors')
-  const Donations = sequelize.define('donations')
+  
+  // const Donor = sequelize.define("donors");
+  // const Donations = sequelize.define("donations");
 
   
   return sequelize.define("donors", {
@@ -47,11 +47,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     donor_contactName: {
       type: DataTypes.STRING
-    }
+    },
   });
-  
+  sequelize.sync({
+    force: true 
+});
   // Donor.hasMany(Donations)
-
-  
 };
 

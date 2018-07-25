@@ -37,5 +37,5 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
   });
-  // Donations.belongsTo(Donor)
+  Donations.belongsTo(Donor)
 };

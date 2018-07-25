@@ -32,7 +32,7 @@ exports.getOneDonation = function(req, id){
 }
 
 //create donation
-exports.createDonation = function(req){
+exports.createDonation = function(req,res){
     return donation.create({
         used_clothing : req.body.donation.used_clothing,
         new_clothing : req.body.donation.new_clothing,
