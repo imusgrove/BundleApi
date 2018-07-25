@@ -38,4 +38,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   Donations.belongsTo(Donor)
+
 };
