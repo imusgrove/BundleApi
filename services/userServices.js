@@ -38,7 +38,7 @@ exports.createUser = function(req, res) {
     var username = req.body.users.username;
     var password = req.body.users.password;
     var email = req.body.users.email;
-  return user
+  return users
     .create({
       username: username,
       passwordhash: bcrypt.hashSync(password, 10),
