@@ -11,8 +11,8 @@ sequelize.sync();
 app.use(bodyParser.json());
 // app.use(require('./middleware/validate-session'));
 app.use('/user', require('./controllers/usercontroller'));
-app.use('./donor', require('./controllers/donorcontroller'));
-app.use('./donation', require('./controllers/donationcontroller'));
+app.use('/donor', require('./controllers/donorcontroller'));
+app.use('/donation', require('./controllers/donationcontroller'));
 
 http.listen(process.env.PORT, () => {
     console.log(`server is listening on port ${process.env.PORT}`)

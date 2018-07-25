@@ -1,20 +1,24 @@
 module.exports = (sequelize, DataTypes) => {
-    const Users = sequelize.define("users",
+    return sequelize.define("users",
 {
+    
     username: {
         type: DataTypes.STRING,
         allowNull: false,
         validate:{
             len:[0,30],
-            unique: true
+        },
+        unique: {
+            args: true,
+            msg: 'Username already exists!'
         }
     },
-    password:{
+    passwordhash:{
         type: DataTypes.STRING,
         allowNull:false,
-        validate:{
-            len:[0,40]
-        }
+        // validate:{
+        //     len:[0,40]
+        // }
     },
     email: {
         type: DataTypes.STRING,
@@ -25,5 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     }, 
     
 })
-return Users;
 }
+
+

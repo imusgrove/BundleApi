@@ -5,7 +5,7 @@ const sequelize = new Sequelize(process.env.PGDB, process.env.PGUSER, process.en
     port: 5432,
     host: process.env.PGHOST
     
-})
+});
 
 sequelize.authenticate()
     .then(() => console.log('postgres database is connected'))
