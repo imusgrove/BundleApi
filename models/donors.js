@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-// module.exports = (sequelize, DataTypes) => {
-=======
 module.exports = (sequelize, DataTypes) => {
   
   const Donor = sequelize.define("donors");
   const Donations = sequelize.define("donations");
->>>>>>> 2290c5fdc6b3405fcf4911d2d8744b077eae520b
 
 //   const Donor = sequelize.define("donors");
 //   const Donations = sequelize.define("donations");
@@ -107,10 +103,7 @@ var Donor = db.define("donors", {
     type: Sequelize.STRING
   }
 });
-<<<<<<< HEAD
-=======
   Donor.hasMany(Donations)
 };
->>>>>>> 2290c5fdc6b3405fcf4911d2d8744b077eae520b
 
 module.exports = Donor;
