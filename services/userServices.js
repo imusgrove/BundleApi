@@ -3,35 +3,62 @@ const user = sequelize.import("../models/user");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-//get all users
-exports.getAll = function() {
-  return user.findAll().then(
-    function findAllSuccess(data) {
-      res.json(data);
+
+
+//login
+exports.getOneUser= function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  return user
+  .findOne({ where: { username: req.body.username}}).then(
+    function(user) {
+      if (user) {
+        bcrypt.compare(req.body.password, user.passwordhash, function(
+          err,
+          matches
+        ) {
+          if (matches) {
+            var token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+              expiresIn: 60 * 60 * 24
+            });
+            res.json({
+              user: user,
+              message: "successfully authenticated",
+              sessionToken: token
+            });
+          } else {
+            res.status(502).send({ error: "You failed, yo" });
+          }
+        });
+      } else {
+        res.status(500).send({ error: "failed to authenticate" });
+      }
     },
-    function findAllError(err) {
-      res.send(500, err.message);
+    function(err) {
+      res.status(501).send({ error: "you failed, yo" });
     }
   );
-};
+}
 
-//get one user
-exports.getOneUser = function(req, id) {
-  return user
-    .findOne({
-      where: {
-        id: req.params.id
-      }
-    })
-    .then(
-      function findOneSuccess(data) {
-        res.json(data);
-      },
-      function findOneError(err) {
-        res.send(500, err.message);
-      }
-    );
-};
+
+
+// //get one user
+// exports.getOneUser = function(req, id) {
+//   return user
+//     .findOne({
+//       where: {
+//         id: req.params.id
+//       }
+//     })
+//     .then(
+//       function findOneSuccess(user) {
+//         res.json(user);
+//       },
+//       function findOneError(err) {
+//         res.send(500, err.message);
+//       }
+//     );
+// };
 
 //create user
 exports.createUser = function(req, res) {
@@ -63,15 +90,19 @@ exports.createUser = function(req, res) {
     } 
 
 //edit user
-exports.editUser = function(req, id) {
+exports.editUser = function(req, res) {
+  var data = req.params.id;
+  var username = req.body.users.username;
+  var password = req.body.users.password;
+  var email = req.body.users.email;
   return user
     .update(
       {
-        username: req.body.user.username,
-        password: req.body.user.password,
-        email: req.body.user.email
+        username: req.body.users.username,
+        password: req.body.users.password,
+        email: req.body.users.email
       },
-      { where: { id: req.params.id } }
+      { where: { id:data} }
     )
     .then(
       function updateSuccess(user) {
@@ -80,7 +111,7 @@ exports.editUser = function(req, id) {
         });
       },
       function updateError(err) {
-        res.send(500, err.message);
+        res(500).send(err.message);
       }
     );
 };
@@ -99,3 +130,4 @@ exports.deleteUser = function(req, id) {
       }
     );
 };
+

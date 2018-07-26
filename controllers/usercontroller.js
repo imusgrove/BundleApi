@@ -5,15 +5,13 @@ var validate = require('../middleware/headers');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-//get all users
-router.get("/user", validate, function(req, res) {  
-    User
-    .getAll()
-    
-})
+//login user
+router.post('/login', validate, function(req, res){
+    User.getOneUser(req,res)
+});
 
 //edit user
-router.put(`/api/userEdit/:id`, validate, function(req, res) {
+router.put(`/api/update/:id`, validate, function(req, res) {
     var data = req.params.id;
     User.editUser(req, data)     
 });
