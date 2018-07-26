@@ -41,25 +41,6 @@ exports.getOneUser= function(req, res) {
 }
 
 
-
-// //get one user
-// exports.getOneUser = function(req, id) {
-//   return user
-//     .findOne({
-//       where: {
-//         id: req.params.id
-//       }
-//     })
-//     .then(
-//       function findOneSuccess(user) {
-//         res.json(user);
-//       },
-//       function findOneError(err) {
-//         res.send(500, err.message);
-//       }
-//     );
-// };
-
 //create user
 exports.createUser = function(req, res) {
     var username = req.body.users.username;
@@ -92,9 +73,9 @@ exports.createUser = function(req, res) {
 //edit user
 exports.editUser = function(req, res) {
   var data = req.params.id;
-  var username = req.body.users.username;
-  var password = req.body.users.password;
-  var email = req.body.users.email;
+  // var username = req.body.username;
+  // var password = req.body.password;
+  // var email = req.body.email;
   return user
     .update(
       {
@@ -116,7 +97,8 @@ exports.editUser = function(req, res) {
     );
 };
 
-exports.deleteUser = function(req, id) {
+exports.deleteUser = function(req, res) {
+  var id = req.params.id;
   return user
     .destroy({
       where: { id: req.params.id }
