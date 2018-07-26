@@ -6,6 +6,8 @@ const sequelize = new Sequelize(process.env.PGDB, process.env.PGUSER, process.en
     host: process.env.PGHOST
     
 });
+//test line
+var Donors = require('./models/donors');
 
 sequelize.authenticate()
     .then(() => console.log('postgres database is connected'))

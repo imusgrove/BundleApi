@@ -47,6 +47,3 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 };
-
-// const Donations = require("./donations");
-// Donor.hasMany(Donations)
