@@ -10,8 +10,8 @@ router.get("/donation", function(req, res) {
 });
 
 //create donation
-router.post('/api/createdonation', validate, function (req, res) {
-    Donation.createDonation(req)
+router.post('/createdonation', validate, function (req, res) {
+    Donation.createDonation(req,res)
    
 });
 
