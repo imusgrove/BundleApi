@@ -86,12 +86,13 @@ exports.editDonation = function(req, res){
     );
 }
 
-exports.deleteDonation = function(req ,id){
+//delete donation
+exports.deleteDonation = function(req ,res){
     return donation.destroy({
         where:{ id:req.params.id}
     })
     .then(
-        function deleteSuccess(data) {
+        function deleteSuccess(donation) {
             res.send("Donation successfully deleted");
         },
         function deleteError(err){

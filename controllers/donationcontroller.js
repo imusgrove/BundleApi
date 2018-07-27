@@ -30,9 +30,9 @@ router.get('/getdonation/:id', validate, function(req, res) {
     });
 
 //delete donation
-router.delete(`/api/deleteDonation/:id`, validate, function(req, res) {
+router.delete('/deletedonation/:id', validate, function(req, res) {
     var id = req.params.id;
-    Donation.deleteDonation(req, id)      
+    Donation.deleteDonation(req, res)      
 });
 
 module.exports = router;
