@@ -8,7 +8,7 @@ exports.getAll = function() {
     return donor.findAll()
 }
 
-//get one donor
+//get one donor-doesn't work
 exports.getOneDonor = function(req, res) {
     return donor.findOne({
         where: {
