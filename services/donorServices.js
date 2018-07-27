@@ -77,6 +77,8 @@ exports.createDonor = function(req, res) {
   var donor_contactName = req.body.donor_contactName;
   return donor
     .create({
+      donor_fname: donor_fname,
+      donor_lname: donor_lname,
       donor_username: donor_username,
       donor_password: bcrypt.hashSync(donor_password, 10),
       donor_email: donor_email,
