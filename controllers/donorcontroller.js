@@ -23,16 +23,15 @@ router.put('/editdonor/:id', validate, function(req, res) {
     });
 
 //get one donor
-router.get(`/api/getDonor/:id`, validate, function(req, res) {
+router.get('/getdonor/:id', validate, function(req, res) {
         var id = req.params.id;
-        Donor.getOneDonor(req, id)
-            
+        Donor.getOneDonor(req, res)      
     });
 
 //delete donor
-router.delete(`/api/deleteDonor/:id`, validate, function(req, res) {
+router.delete('/deletedonor/:id', validate, function(req, res) {
     var id = req.params.id;
-    Donor.deleteDonor(req, id)
+    Donor.deleteDonor(req, res)
 })
 
 module.exports = router;

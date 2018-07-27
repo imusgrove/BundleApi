@@ -9,15 +9,15 @@ exports.getAll = function() {
 }
 
 //get one donor
-exports.getOneDonor = function(req, id) {
+exports.getOneDonor = function(req, res) {
     return donor.findOne({
         where: {
             id:req.params.id
         }
     })
     .then(
-        function findOneSuccess(data) {
-            res.json(data);
+        function findOneSuccess(donor) {
+        res.status(req).json(res)
         },
         function findOneError(err) {
             res.send(500, err.message);
@@ -94,12 +94,12 @@ exports.editDonor = function(req, res){
     );
 }
 //delete donors
-exports.deleteDonor = function(req ,id){
+exports.deleteDonor = function(req ,res){
     return donor.destroy({
         where:{ id:req.params.id}
     })
     .then(
-        function deleteSuccess(data) {
+        function deleteSuccess(donor) {
             res.send("Donor successfully deleted");
         },
         function deleteError(err){
