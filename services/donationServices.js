@@ -2,7 +2,7 @@ var sequelize = require('../db');
 const donation = sequelize.import('../models/donations')
 
 //get all donations
-exports.getAll = function() {
+exports.getAll = function(req,res) {
     return donation.findAll()
     .then(
         function findAllSuccess(data) {
@@ -15,15 +15,15 @@ exports.getAll = function() {
 }
 
 //get one donation
-exports.getOneDonation = function(req, id){
+exports.getOneDonation = function(req, res){
     return donation.findOne({
         where: {
             id:req.params.id
         }
     })
     .then(
-        function findOneSuccess(data) {
-            res.json(data);
+        function findOneSuccess(donation) {
+            res.json(donation);
         },
         function findOneError(err) {
             res.send(500, err.message);
@@ -59,7 +59,7 @@ exports.createDonation = function(req,res){
 }
 
 //edit donation
-exports.editDonation = function(req, id){
+exports.editDonation = function(req, res){
     return donation.update({
         used_clothing : req.body.donation.used_clothing,
         new_clothing : req.body.donation.new_clothing,

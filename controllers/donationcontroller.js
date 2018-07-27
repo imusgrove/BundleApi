@@ -4,9 +4,9 @@ var Donation = require('../services/donationServices');
 var validate = require('../middleware/headers');
 
 //get all donations
-router.get("/donation", function(req, res) {
+router.get("/", function(req, res) {
     Donation
-    .getAll() 
+    .getAll(req,res) 
 });
 
 //create donation
@@ -16,9 +16,9 @@ router.post('/createdonation', validate, function (req, res) {
 });
 
 //edit donation
-router.put(`/api/donationEdit/:id`, validate, function(req, res) {
+router.put('/editdonation/:id', validate, function(req, res) {
         var data = req.params.id;
-        Donation.editDonation(req, data)
+        Donation.editDonation(req, res)
 
             
     });
