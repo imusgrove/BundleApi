@@ -24,11 +24,12 @@ router.put('/editdonation/:id', validate, function(req, res) {
     });
 
 //get one donation
-router.get(`/api/getDonation/:id`, validate, function(req, res) {
+router.get('/getdonation/:id', validate, function(req, res) {
         var id = req.params.id;
-        Donation.getOneDonation(req, id)      
+        Donation.getOneDonation(req, res)      
     });
 
+//delete donation
 router.delete(`/api/deleteDonation/:id`, validate, function(req, res) {
     var id = req.params.id;
     Donation.deleteDonation(req, id)      
