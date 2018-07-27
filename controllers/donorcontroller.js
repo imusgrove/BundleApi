@@ -5,34 +5,38 @@ var validate = require('../middleware/headers');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+//login user
+router.post('/login', validate, function(req, res){
+    Donor.getOneDonor(req,res)
+});
+
 //get all donors
-router.get("/donor", validate, function (req, res) {
+router.get("/", validate, function (req, res) {
     Donor
     .getAll()
   })
 
   //create donor
-router.post('/api/createdonor', function (req, res) {
+router.post('/createdonor', function (req, res) {
     Donor.createDonor(req, res)
 })
 
 //edit donor
-router.put(`/api/donorEdit/:id`, validate, function(req, res) {
+router.put('/editdonor/:id', validate, function(req, res) {
         var data = req.params.id;
-        Donor.editDonor(req, data)     
+        Donor.editDonor(req, res)     
     });
 
 //get one donor
-router.get(`/api/getDonor/:id`, validate, function(req, res) {
+router.get('/getdonor/:id', validate, function(req, res) {
         var id = req.params.id;
-        Donor.getOneDonor(req, id)
-            
+        Donor.getOneDonor(req, res)      
     });
 
 //delete donor
-router.delete(`/api/deleteDonor/:id`, validate, function(req, res) {
+router.delete('/deletedonor/:id', validate, function(req, res) {
     var id = req.params.id;
-    Donor.deleteDonor(req, id)
+    Donor.deleteDonor(req, res)
 })
 
 module.exports = router;

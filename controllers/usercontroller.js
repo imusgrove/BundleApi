@@ -5,17 +5,9 @@ var validate = require('../middleware/headers');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-//get all users
-router.get("/user", validate, function(req, res) {  
-    User
-    .getAll()
-    
-})
-
-//edit user
-router.put(`/api/userEdit/:id`, validate, function(req, res) {
-    var data = req.params.id;
-    User.editUser(req, data)     
+//login user
+router.post('/login', validate, function(req, res){
+    User.getOneUser(req,res)
 });
 
 //create user
@@ -23,16 +15,15 @@ router.post('/api/createuser', function (req, res) {
     User.createUser(req,res)
 })
 
-//get one user
-router.get(`/api/getUser/:id`, validate, function(req, res) {
-    var id = req.params.id;
-    User.getOneUser(req, id)       
+//edit user
+router.put('/update/:id', validate, function(req, res) {
+    User.editUser(req, res)     
 });
 
+
 //delete user
-router.delete(`/api/deleteUser/:id`, validate, function(req, res) {
-    var id = req.params.id;
-    User.deleteUser(req, id)  
+router.delete('/delete/:id', validate, function(req, res) {
+    User.deleteUser(req, res)  
 })
 
 module.exports = router;

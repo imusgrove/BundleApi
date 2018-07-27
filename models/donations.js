@@ -1,6 +1,4 @@
 module.exports = (sequelize, DataTypes) => {
-  const Donor = sequelize.define("donors");
-  const Donations = sequelize.define("donations");
 
   return sequelize.define("donations", {
     used_clothing: {
@@ -37,6 +35,4 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
   });
-  Donations.belongsTo(Donor)
-
 };

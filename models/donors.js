@@ -1,8 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   
-  const Donor = sequelize.define("donors");
-  const Donations = sequelize.define("donations");
-
   
   return sequelize.define("donors", {
     donor_username: {
@@ -14,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       unique: {
         args: true,
         msg: 'Username already exists!'
-    }
+      }
     },
     donor_password: {
       type: DataTypes.STRING,
       allowNull: false,
       // validate: {
-      //   len: [0, 40]
+      //   len: [4, 40]
       // }
     },
     donor_email: {
@@ -49,9 +46,4 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
   });
-  sequelize.sync({
-    force: true 
-});
-  Donor.hasMany(Donations)
 };
-

@@ -4,34 +4,33 @@ var Donation = require('../services/donationServices');
 var validate = require('../middleware/headers');
 
 //get all donations
-router.get("/donation", function(req, res) {
+router.get("/", function(req, res) {
     Donation
-    .getAll() 
+    .getAll(req,res) 
 });
 
 //create donation
-router.post('/api/createdonation', validate, function (req, res) {
-    Donation.createDonation(req)
+router.post('/createdonation', validate, function (req, res) {
+    Donation.createDonation(req,res)
    
 });
 
 //edit donation
-router.put(`/api/donationEdit/:id`, validate, function(req, res) {
+router.put('/editdonation/:id', validate, function(req, res) {
         var data = req.params.id;
-        Donation.editDonation(req, data)
-
-            
+        Donation.editDonation(req, res)
     });
 
 //get one donation
-router.get(`/api/getDonation/:id`, validate, function(req, res) {
+router.get('/getdonation/:id', validate, function(req, res) {
         var id = req.params.id;
-        Donation.getOneDonation(req, id)      
+        Donation.getOneDonation(req, res)      
     });
 
-router.delete(`/api/deleteDonation/:id`, validate, function(req, res) {
+//delete donation
+router.delete('/deletedonation/:id', validate, function(req, res) {
     var id = req.params.id;
-    Donation.deleteDonation(req, id)      
+    Donation.deleteDonation(req, res)      
 });
 
 module.exports = router;

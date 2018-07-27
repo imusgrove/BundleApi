@@ -1,8 +1,9 @@
+const express = require("express");
 var sequelize = require('../db');
 const donation = sequelize.import('../models/donations')
 
 //get all donations
-exports.getAll = function() {
+exports.getAll = function(req,res) {
     return donation.findAll()
     .then(
         function findAllSuccess(data) {
@@ -15,15 +16,15 @@ exports.getAll = function() {
 }
 
 //get one donation
-exports.getOneDonation = function(req, id){
+exports.getOneDonation = function(req, res){
     return donation.findOne({
         where: {
             id:req.params.id
         }
     })
     .then(
-        function findOneSuccess(data) {
-            res.json(data);
+        function findOneSuccess(donation) {
+            res.json(donation);
         },
         function findOneError(err) {
             res.send(500, err.message);
@@ -32,23 +33,36 @@ exports.getOneDonation = function(req, id){
 }
 
 //create donation
-exports.createDonation = function(req,res){
+exports.createDonation = function(req, res){
+
+    let used_clothing = req.body.donation.used_clothing;
+    let new_clothing = req.body.donation.new_clothing;
+    let used_shoes = req.body.donation.used_shoes;
+    let new_shoes = req.body.donation.new_shoes;
+    let baby_food = req.body.donation.baby_food;
+    let diaper_bags = req.body.donation.diaper_bags;
+    let bottles = req.body.donation.bottles;
+    let pacifiers = req.body.donation.pacifiers;
+    let diapers_boxes = req.body.donation.diapers_boxes;
+    let beds = req.body.donation.beds;
+    let misc_items = req.body.donation.misc_items
+
     return donation.create({
-        used_clothing : req.body.donation.used_clothing,
-        new_clothing : req.body.donation.new_clothing,
-        used_shoes : req.body.donation.used_shoes,
-        new_shoes : req.body.donation.new_shoes,
-        baby_food:req.body.donation.baby_food,
-        diaper_bags:req.body.donation.diaper_bags,
-        bottles:req.body.donation.bottles,
-        pacifiers:req.body.donation.pacifiers,
-        diapers_boxes:req.body.donation.diapers_boxes,
-        beds:req.body.donation.beds,
-        misc_items:req.body.donation.misc_items
+        used_clothing : used_clothing,
+        new_clothing : new_clothing,
+        used_shoes : used_shoes,
+        new_shoes : new_shoes,
+        baby_food:baby_food,
+        diaper_bags:diaper_bags,
+        bottles:bottles,
+        pacifiers:pacifiers,
+        diapers_boxes:diapers_boxes,
+        beds:beds,
+        misc_items:misc_items
     })
     .then(
         function createSuccess(donation) {
-            res.json({
+            res.json ({
                 donation: donation
             });            
         },
@@ -59,7 +73,7 @@ exports.createDonation = function(req,res){
 }
 
 //edit donation
-exports.editDonation = function(req, id){
+exports.editDonation = function(req, res){
     return donation.update({
         used_clothing : req.body.donation.used_clothing,
         new_clothing : req.body.donation.new_clothing,
@@ -86,12 +100,13 @@ exports.editDonation = function(req, id){
     );
 }
 
-exports.deleteDonation = function(req ,id){
+//delete donation
+exports.deleteDonation = function(req ,res){
     return donation.destroy({
         where:{ id:req.params.id}
     })
     .then(
-        function deleteSuccess(data) {
+        function deleteSuccess(donation) {
             res.send("Donation successfully deleted");
         },
         function deleteError(err){
