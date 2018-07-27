@@ -6,7 +6,7 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 //get all donors
-router.get("/donor", validate, function (req, res) {
+router.get("/", validate, function (req, res) {
     Donor
     .getAll()
   })
