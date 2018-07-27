@@ -3,27 +3,62 @@ const donor = sequelize.import('../models/donors');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+//login
+exports.getOneDonor= function(req, res) {
+    var donor_username = req.body.donor_username;
+    var donor_password = req.body.donor_password;
+    return donor
+    .findOne({ where: {donor_username: req.body.donor_username}}).then(
+      function(donor) {
+        if (donor) {
+          bcrypt.compare(req.body.donor_password, donor.donor_password, function(
+            err,
+            matches
+          ) {
+            if (matches) {
+              var token = jwt.sign({ id: donor.id }, process.env.JWT_SECRET, {
+                expiresIn: 60 * 60 * 24
+              });
+              res.json({
+                donor: donor,
+                message: "successfully authenticated",
+                sessionToken: token
+              });
+            } else {
+              res.status(502).send({ error: "You failed, yo" });
+            }
+          });
+        } else {
+          res.status(500).send({ error: "failed to authenticate" });
+        }
+      },
+      function(err) {
+        res.status(501).send({ error: "you failed, yo" });
+      }
+    );
+  }
+
 //get all donors
 exports.getAll = function() {
     return donor.findAll()
 }
 
-//get one donor-doesn't work
-exports.getOneDonor = function(req, res) {
-    return donor.findOne({
-        where: {
-            id:req.params.id
-        }
-    })
-    .then(
-        function findOneSuccess(donor) {
-        res.status(req).json(res)
-        },
-        function findOneError(err) {
-            res.send(500, err.message);
-        }
-    );
-}
+// //get one donor-doesn't work
+// exports.getOneDonor = function(req, res) {
+//     return donor.findOne({
+//         where: {
+//             id:req.params.id
+//         }
+//     })
+//     .then(
+//         function findOneSuccess(donor) {
+//         res.status(req).json(res)
+//         },
+//         function findOneError(err) {
+//             res.send(500, err.message);
+//         }
+//     );
+// }
 
 //create donors
 exports.createDonor = function(req,res){

@@ -5,6 +5,11 @@ var validate = require('../middleware/headers');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+//login user
+router.post('/login', validate, function(req, res){
+    Donor.getOneDonor(req,res)
+});
+
 //get all donors
 router.get("/", validate, function (req, res) {
     Donor
