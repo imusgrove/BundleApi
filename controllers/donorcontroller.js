@@ -12,14 +12,14 @@ router.get("/", validate, function (req, res) {
   })
 
   //create donor
-router.post('/api/createdonor', function (req, res) {
+router.post('/createdonor', function (req, res) {
     Donor.createDonor(req, res)
 })
 
 //edit donor
-router.put(`/api/donorEdit/:id`, validate, function(req, res) {
+router.put('/editdonor/:id', validate, function(req, res) {
         var data = req.params.id;
-        Donor.editDonor(req, data)     
+        Donor.editDonor(req, res)     
     });
 
 //get one donor

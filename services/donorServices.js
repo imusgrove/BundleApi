@@ -7,6 +7,7 @@ var bcrypt = require("bcryptjs");
 exports.getAll = function() {
     return donor.findAll()
 }
+
 //get one donor
 exports.getOneDonor = function(req, id) {
     return donor.findOne({
@@ -67,20 +68,22 @@ exports.createDonor = function(req,res){
     } 
 
 //edit donors
-exports.editDonor = function(req, id){
+exports.editDonor = function(req, res){
     return donor.update({
-        donor_username : req.body.donor.donor_username,
-        donor_password : req.body.donor.donor_password,
-        donor_email : req.body.donor.donor_email,
-        donor_address : req.body.donor.donor_address,
-        donor_city: req.body.donor.donor_city,
-        donor_zipCode: req.body.donor.donor_zipCode,
-        donor_phoneNumber: req.body.donor.donor_phoneNumber,
-        donor_contactName: req.body.donor.donor_contactName
+        donor_username : req.body.donor_username,
+        donor_password : req.body.donor_password,
+        donor_email : req.body.donor_email,
+        donor_address : req.body.donor_address,
+        donor_city: req.body.donor_city,
+        donor_state: req.body.donor_state,
+        donor_zipCode: req.body.donor_zipCode,
+        donor_phoneNumber: req.body.donor_phoneNumber,
+        donor_contactName: req.body.donor_contactName
     },
     {where: {id: req.params.id}})
     .then(
         function updateSuccess(donor) {
+            
             res.json({
                 donor: donor
             });            

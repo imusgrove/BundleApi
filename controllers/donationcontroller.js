@@ -19,8 +19,6 @@ router.post('/createdonation', validate, function (req, res) {
 router.put('/editdonation/:id', validate, function(req, res) {
         var data = req.params.id;
         Donation.editDonation(req, res)
-
-            
     });
 
 //get one donation
