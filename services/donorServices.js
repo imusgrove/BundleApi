@@ -62,6 +62,8 @@ exports.getAll = function() {
 
 //create donors
 exports.createDonor = function(req,res){
+    var donor_fname = req.body.donor_fname;
+    var donor_lname = req.body.donor_lname;
     var donor_username = req.body.donor_username;
     var donor_password = req.body.donor_password;
     var donor_email = req.body.donor_email;
@@ -71,8 +73,9 @@ exports.createDonor = function(req,res){
     var donor_zipCode = req.body.donor_zipCode;
     var donor_phoneNumber = req.body.donor_phoneNumber;
     var donor_contactName = req.body.donor_contactName;
-    return donor
-    .create({
+    return Donor.create({
+        donor_fname: req.body.donor_fname,
+        donor_lname: req.body.donor_lname,
         donor_username : donor_username,
         donor_password : bcrypt.hashSync(donor_password, 10),
         donor_email : donor_email,

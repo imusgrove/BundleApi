@@ -2,6 +2,19 @@ module.exports = (sequelize, DataTypes) => {
   
   
   return sequelize.define("donors", {
+
+    donor_lname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [0, 30] }
+      },
+    donor_fname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [0, 30] }
+      },
     donor_username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -44,6 +57,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     donor_contactName: {
       type: DataTypes.STRING
-    },
+    }
   });
 };
