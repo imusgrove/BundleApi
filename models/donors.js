@@ -1,20 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  
-  
   return sequelize.define("donors", {
-
-    donor_lname: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [0, 30] }
-      },
     donor_fname: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [0, 30] }
-      },
+        len: [0, 30]
+      }
+    },
+    donor_lname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [0, 30]
+      }
+    },
     donor_username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,12 +22,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       unique: {
         args: true,
-        msg: 'Username already exists!'
+        msg: "Username already exists!"
       }
     },
     donor_password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
       // validate: {
       //   len: [4, 40]
       // }
