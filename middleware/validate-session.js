@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 var sequelize = require('../db')
-var User = sequelize.import('../models/user')
+var Donor = sequelize.import('../models/donor')
 
 module.exports = function(req, res, next){
     if(req.method === 'OPTIONS'){
@@ -12,8 +12,8 @@ module.exports = function(req, res, next){
         else{
             jwt.verify(sessionToken, process.env.JWT_SECRET, (err, decoded) => {
                 if(decoded){
-                    User.findOne({where:{id: decoded.id}}).then(user => {
-                        req.user = user;
+                    Donor.findOne({where:{id: decoded.id}}).then(donor => {
+                        req.donor = donor;
                         next();
                     },
                     function(){
