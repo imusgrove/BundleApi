@@ -64,8 +64,7 @@ exports.createDonation = function(req, res){
         function createSuccess(donation) {
             res.json ({
                 donation: donation
-            });
-                 
+            });  
         },
         function createError(err){
             res.send(500, err.message);
