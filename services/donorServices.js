@@ -74,7 +74,6 @@ exports.createDonor = function(req, res) {
   var donor_state = req.body.donor_state;
   var donor_zipCode = req.body.donor_zipCode;
   var donor_phoneNumber = req.body.donor_phoneNumber;
-  var donor_contactName = req.body.donor_contactName;
   return donor
     .create({
       donor_fname: donor_fname,
@@ -87,7 +86,6 @@ exports.createDonor = function(req, res) {
       donor_state: donor_state,
       donor_zipCode: donor_zipCode,
       donor_phoneNumber: donor_phoneNumber,
-      donor_contactName: donor_contactName
     })
     .then(function createSuccess(donor) {
       var token = jwt.sign({ id: donor.id }, process.env.JWT_SECRET, {
@@ -118,7 +116,6 @@ exports.editDonor = function(req, res) {
         donor_state: req.body.donor_state,
         donor_zipCode: req.body.donor_zipCode,
         donor_phoneNumber: req.body.donor_phoneNumber,
-        donor_contactName: req.body.donor_contactName
       },
       { where: { id: req.params.id } }
     )

@@ -11,7 +11,7 @@ router.post('/login', validate, function(req, res){
 });
 
 //create user
-router.post('/api/createuser', function (req, res) {
+router.post('/createuser', function (req, res) {
     User.createUser(req,res)
 })
 

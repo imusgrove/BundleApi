@@ -43,11 +43,15 @@ exports.getOneUser= function(req, res) {
 
 //create user
 exports.createUser = function(req, res) {
-    var username = req.body.users.username;
-    var password = req.body.users.password;
-    var email = req.body.users.email;
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var username = req.body.username;
+    var password = req.body.password;
+    var email = req.body.email;
   return user
     .create({
+      firstName: firstName,
+      lastName: lastName,
       username: username,
       passwordhash: bcrypt.hashSync(password, 10),
       email: email
@@ -79,6 +83,8 @@ exports.editUser = function(req, res) {
   return user
     .update(
       {
+        firstName: req.body.users.firstName,
+        lastName: req.body.users.lastName,
         username: req.body.users.username,
         password: req.body.users.password,
         email: req.body.users.email

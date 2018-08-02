@@ -54,8 +54,5 @@ module.exports = (sequelize, DataTypes) => {
     donor_phoneNumber: {
       type: DataTypes.STRING
     },
-    donor_contactName: {
-      type: DataTypes.STRING
-    }
   });
 };
