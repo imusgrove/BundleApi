@@ -5,14 +5,15 @@ const donation = sequelize.import('../models/donations')
 //get all donations
 exports.getAll = function(req,res) {
     return donation.findAll()
-    .then(
-        function findAllSuccess(data) {
-            res.json(data);
-        },
-        function findAllError(err){
-            res.send(500, err.message);
-        }
-    );
+         .then(donation => res.status(200).json(donation))
+    // .then(
+    //     function findAllSuccess(data) {
+    //         res.json(data);
+    //     },
+    //     function findAllError(err){
+    //         res.send(500, err.message);
+    //     }
+    // );
 }
 
 //get one donation

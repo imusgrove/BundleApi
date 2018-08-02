@@ -5,8 +5,7 @@ var validate = require('../middleware/headers');
 
 //get all donations
 router.get("/", function(req, res) {
-    Donation
-    .getAll(req,res) 
+   Donation.getAll(req,res) 
 });
 
 //create donation
