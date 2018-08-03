@@ -7,7 +7,19 @@ exports.getAll = function(req,res) {
     return donation.findAll()
     .then(
         function findAllSuccess(data) {
-            res.json(data);
+            res.json(data.map(datum => datum.toJSON()).map(obj => {
+                let customDonor = {id: 0, donationItem: '', donationAmount: 0}
+                customDonor.id = obj.id
+                delete obj.id
+                for(let key in obj) {
+                  if(obj[key] > 0) {
+                    customDonor.donationItem = key
+                    customDonor.donationAmount = obj[key]
+                    break;
+                  }
+                }
+                return customDonor
+              }));
         },
         function findAllError(err){
             res.send(500, err.message);
@@ -32,34 +44,30 @@ exports.getOneDonation = function(req, res){
     );
 }
 
+//req.body.option
+//req.body.amount
+
+
 //create donation
 exports.createDonation = function(req, res){
 
-    let used_clothing = req.body.used_clothing;
-    let new_clothing = req.body.new_clothing;
-    let used_shoes = req.body.used_shoes;
-    let new_shoes = req.body.new_shoes;
-    let baby_food = req.body.baby_food;
-    let diaper_bags = req.body.diaper_bags;
-    let bottles = req.body.bottles;
-    let pacifiers = req.body.pacifiers;
-    let diapers_boxes = req.body.diapers_boxes;
-    let beds = req.body.beds;
-    let misc_items = req.body.misc_items
-
-    return donation.create({
-        used_clothing : used_clothing,
-        new_clothing : new_clothing,
-        used_shoes : used_shoes,
-        new_shoes : new_shoes,
-        baby_food:baby_food,
-        diaper_bags:diaper_bags,
-        bottles:bottles,
-        pacifiers:pacifiers,
-        diapers_boxes:diapers_boxes,
-        beds:beds,
-        misc_items:misc_items
-    })
+    let newDonation = {
+        used_clothing : 0,
+        new_clothing : 0,
+        used_shoes : 0,
+        new_shoes : 0,
+        baby_food: 0,
+        diaper_bags: 0,
+        bottles: 0,
+        pacifiers: 0,
+        diapers_boxes: 0,
+        beds: 0,
+        misc_items: 0
+    }
+    console.log(req.body)
+    newDonation[req.body.donationOption] = req.body.donationAmount
+    console.log(newDonation)
+    return donation.create(newDonation)
     .then(
         function createSuccess(donation) {
             res.json ({
