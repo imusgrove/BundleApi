@@ -24,13 +24,14 @@ router.post('/createdonor', function (req, res) {
 
 //edit donor
 router.put('/editdonor/:id', validate, function(req, res) {
-        var data = req.params.id;
-        Donor.editDonor(req, data)
+        Donor.editDonor(req, req.params.id)
         .then(
-            function editSuccess(donor) {
-              res.send("Donor successfully edited");
+            function updateSuccess(donor) {
+              res.json({
+                  donor: donor
+              });
             },
-            function editError(err) {
+            function updateError(err) {
               res.send(500, err.message);
             }
           );     
