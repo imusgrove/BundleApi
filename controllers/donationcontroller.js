@@ -28,8 +28,15 @@ router.get('/getdonation/:id', validate, function(req, res) {
 
 //delete donation
 router.delete('/deletedonation/:id', validate, function(req, res) {
-    var id = req.params.id;
-    Donation.deleteDonation(req, res)      
+    Donation.deleteDonation(req, res)
+    .then(
+        function deleteSuccess(donation) {
+            res.send("Donation deleted");
+        },
+        function deleteError(err) {
+            res.send(500, err.message);
+        }
+    );      
 });
 
 module.exports = router;

@@ -110,6 +110,7 @@ exports.editDonation = function(req, res){
 
 //delete donation
 exports.deleteDonation = function(req ,res){
+    console.log(req.params)
     return donation.destroy({
         where:{ id:req.params.id}
     })

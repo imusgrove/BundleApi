@@ -131,17 +131,9 @@ exports.editDonor = function(req, res) {
     );
 };
 //delete donors
-exports.deleteDonor = function(req, res) {
-  return donor
+exports.deleteDonor = function(id) {
+  return donation
     .destroy({
-      where: { id: req.params.id }
+      where: { id: id }
     })
-    .then(
-      function deleteSuccess(donor) {
-        res.send("Donor successfully deleted");
-      },
-      function deleteError(err) {
-        res.send(500, err.message);
-      }
-    );
 };
