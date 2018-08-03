@@ -93,34 +93,24 @@ exports.getDonor = (id) => {
 }
 
 //edit donors
-exports.editDonor = function(req, res) {
+exports.editDonor = function(req, id) {
   return donor
     .update(
       {
-        donor_fname: req.body.donor_fname,
-        donor_lname: req.body.donor_lname,
-        donor_username: req.body.donor_username,
-        donor_password: req.body.donor_password,
-        donor_email: req.body.donor_email,
-        donor_address: req.body.donor_address,
-        donor_city: req.body.donor_city,
-        donor_state: req.body.donor_state,
-        donor_zipCode: req.body.donor_zipCode,
-        donor_phoneNumber: req.body.donor_phoneNumber,
+        donor_fname: req.body.donor.donor_fname,
+        donor_lname: req.body.donor.donor_lname,
+        donor_username: req.body.donor.donor_username,
+        donor_email: req.body.donor.donor_email,
+        donor_address: req.body.donor.donor_address,
+        donor_city: req.body.donor.donor_city,
+        donor_state: req.body.donor.donor_state,
+        donor_zipCode: req.body.donor.donor_zipCode,
+        donor_phoneNumber: req.body.donor.donor_phoneNumber,
       },
-      { where: { id: req.params.id } }
+      { where: { id: id } }
     )
-    // .then(
-    //   function updateSuccess(donor) {
-    //     res.json({
-    //       donor: donor
-    //     });
-    //   },
-    //   function updateError(err) {
-    //     res.send(500, err.message);
-    //   }
-    // );
 };
+
 //delete donors
 exports.deleteDonor = function(id) {
   return donor
