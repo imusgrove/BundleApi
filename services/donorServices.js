@@ -5,16 +5,14 @@ var bcrypt = require("bcryptjs");
 
 //login
 exports.getOneDonor = function(req, res) {
-  var donor_username = req.body.donor_username;
-  var donor_password = req.body.donor_password;
+  var donor_username = req.body.donor.donor_username;
+  var donor_password = req.body.donor.donor_password;
   return donor
-    .findOne({ where: { donor_username: req.body.donor_username } })
+    .findOne({ where: { donor_username: donor_username } })
     .then(
       function(donor) {
         if (donor) {
-          bcrypt.compare(
-            req.body.donor_password,
-            donor.donor_password,
+          bcrypt.compare(donor_password, donor.donor_password,
             function(err, matches) {
               if (matches) {
                 var token = jwt.sign({ id: donor.id }, process.env.JWT_SECRET, {
@@ -26,7 +24,7 @@ exports.getOneDonor = function(req, res) {
                   sessionToken: token
                 });
               } else {
-                res.status(502).send({ error: "You failed, yo" });
+                res.status(502).send({ error: "Authentication failure" });
               }
             }
           );
@@ -35,7 +33,7 @@ exports.getOneDonor = function(req, res) {
         }
       },
       function(err) {
-        res.status(501).send({ error: "you failed, yo" });
+        res.status(501).send({ error: "Authentication failure" });
       }
     );
 };
@@ -44,23 +42,6 @@ exports.getOneDonor = function(req, res) {
 exports.getAll = function() {
   return donor.findAll();
 };
-
-// //get one donor-doesn't work
-// exports.getOneDonor = function(req, res) {
-//     return donor.findOne({
-//         where: {
-//             id:req.params.id
-//         }
-//     })
-//     .then(
-//         function findOneSuccess(donor) {
-//         res.status(req).json(res)
-//         },
-//         function findOneError(err) {
-//             res.send(500, err.message);
-//         }
-//     );
-// }
 
 //create donors
 exports.createDonor = function(req, res) {
@@ -103,11 +84,21 @@ exports.createDonor = function(req, res) {
     });
 };
 
+//get one donor
+exports.getDonor = (id) => {
+  return donor
+    .findOne({
+      where:{id: id}
+    })
+}
+
 //edit donors
 exports.editDonor = function(req, res) {
   return donor
     .update(
       {
+        donor_fname: req.body.donor_fname,
+        donor_lname: req.body.donor_lname,
         donor_username: req.body.donor_username,
         donor_password: req.body.donor_password,
         donor_email: req.body.donor_email,
@@ -119,29 +110,22 @@ exports.editDonor = function(req, res) {
       },
       { where: { id: req.params.id } }
     )
-    .then(
-      function updateSuccess(donor) {
-        res.json({
-          donor: donor
-        });
-      },
-      function updateError(err) {
-        res.send(500, err.message);
-      }
-    );
+    // .then(
+    //   function updateSuccess(donor) {
+    //     res.json({
+    //       donor: donor
+    //     });
+    //   },
+    //   function updateError(err) {
+    //     res.send(500, err.message);
+    //   }
+    // );
 };
 //delete donors
-exports.deleteDonor = function(req, res) {
+exports.deleteDonor = function(id) {
   return donor
     .destroy({
-      where: { id: req.params.id }
+      where: { id: id }
     })
-    .then(
-      function deleteSuccess(donor) {
-        res.send("Donor successfully deleted");
-      },
-      function deleteError(err) {
-        res.send(500, err.message);
-      }
-    );
+    
 };

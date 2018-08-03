@@ -2,21 +2,21 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define("donors", {
     donor_fname: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
       validate: {
         len: [0, 30]
       }
     },
     donor_lname: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
       validate: {
         len: [0, 30]
       }
     },
     donor_username: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
       validate: {
         len: [0, 30]
       },
@@ -27,14 +27,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     donor_password: {
       type: DataTypes.STRING,
-      allowNull: false
+      // allowNull: false
       // validate: {
       //   len: [4, 40]
       // }
     },
     donor_email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
       validate: {
         isEmail: true
       }
