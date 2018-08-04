@@ -15,7 +15,7 @@ router.post('/createdonation', validate, function (req, res) {
 });
 
 //edit donation
-router.put('/editdonation/:id', validate, function(req, res) {
+router.put('/editdonation', validate, function(req, res) {
         var data = req.params.id;
         Donation.editDonation(req, res)
     });
@@ -29,14 +29,14 @@ router.get('/getdonation/:id', validate, function(req, res) {
 //delete donation
 router.delete('/deletedonation/:id', validate, function(req, res) {
     Donation.deleteDonation(req, res)
-    .then(
-        function deleteSuccess(donation) {
-            res.send("Donation deleted");
-        },
-        function deleteError(err) {
-            res.send(500, err.message);
-        }
-    );      
+    // .then(
+    //     function deleteSuccess(donation) {
+    //         res.send("Donation deleted");
+    //     },
+    //     function deleteError(err) {
+    //         res.send(500, err.message);
+    //     }
+    // );      
 });
 
 module.exports = router;

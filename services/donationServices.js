@@ -64,9 +64,9 @@ exports.createDonation = function(req, res){
         beds: 0,
         misc_items: 0
     }
-    console.log(req.body)
+
     newDonation[req.body.donationOption] = req.body.donationAmount
-    console.log(newDonation)
+
     return donation.create(newDonation)
     .then(
         function createSuccess(donation) {
@@ -80,22 +80,30 @@ exports.createDonation = function(req, res){
     );
 }
 
+//  req.body = {
+//      id: number,
+//      donationAmount: number,
+//      donationItem: string
+//  }
+
 //edit donation
-exports.editDonation = function(req, res){
-    return donation.update({
-        used_clothing : req.body.used_clothing,
-        new_clothing : req.body.new_clothing,
-        used_shoes : req.body.used_shoes,
-        new_shoes : req.body.new_shoes,
-        baby_food:req.body.baby_food,
-        diaper_bags:req.body.diaper_bags,
-        bottles:req.body.bottles,
-        pacifiers:req.body.pacifiers,
-        diapers_boxes:req.body.diapers_boxes,
-        beds:req.body.beds,
-        misc_items:req.body.misc_items
-    },
-    {where: {id: req.params.id}})
+exports.editDonation = function(req,res){
+    let editedDonation = {
+        used_clothing : 0,
+        new_clothing : 0,
+        used_shoes : 0,
+        new_shoes : 0,
+        baby_food: 0,
+        diaper_bags: 0,
+        bottles: 0,
+        pacifiers: 0,
+        diapers_boxes: 0,
+        beds: 0,
+        misc_items: 0
+    }
+    editedDonation[req.body.donationItem] = req.body.donationAmount
+
+    return donation.update(editedDonation, {where: {id: req.body.id}})
     .then(
         function updateSuccess(donation) {
             res.json({
