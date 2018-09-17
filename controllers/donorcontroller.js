@@ -4,7 +4,7 @@ var Donor = require('../services/donorServices');
 var validate = require('../middleware/headers');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
-
+var nodemail = require('../index')
 //login user
 router.post('/login', validate, function(req, res){
     Donor.getOneDonor(req,res)
@@ -17,7 +17,7 @@ router.get("/", validate, function (req, res) {
   })
 
   //create donor
-router.post('/createdonor', function (req, res) {
+router.post('/createdonor', nodemail, function (req, res) {
     Donor.createDonor(req, res)
     
 })
