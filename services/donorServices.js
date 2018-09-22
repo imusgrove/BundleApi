@@ -82,6 +82,15 @@ exports.createDonor = function(req, res) {
       res.status(500).send(err.message);
       console.log(err.message);
     });
+    //nodemailer notification
+    transporter.sendMail(mailOptions, function(error, info){
+      if(error) {
+          alert(error);
+      }else{
+          alert('Email sent' + info.response);
+      }
+  });
+  next();
 };
 
 //get one donor

@@ -20,37 +20,10 @@ app.use(bodyParser.urlencoded({
     extended:true
 }))
 
-//function for nodemailer
-sendmail = function(request,response,next){
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-         auth: {
-             user: 'iesha.musgrove@gmail.com',
-             pass: 'Victory!3395',
-             host: 'smtp.gmail.com',
-             ssl: true
-         }
-    });
-    var mailOptions = {
-        from: 'iesha.musgrove@gmail.com',
-        to: request.body.email,
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!'
-    };
-        transporter.sendMail(mailOptions, function(error, info){
-            if(error) {
-                alert(error);
-            }else{
-                alert('Email sent' + info.response);
-            }
-        });
-        next();
-}
-
 
 // app.use(require('./middleware/validate-session'));
 app.use('/user', require('./controllers/usercontroller'));
-app.use('/donor', sendmail, require('./controllers/donorcontroller'));
+app.use('/donor',  require('./controllers/donorcontroller'));
 app.use('/donation', require('./controllers/donationcontroller'));
 
 
