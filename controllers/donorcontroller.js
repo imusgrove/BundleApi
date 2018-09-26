@@ -5,6 +5,7 @@ var validate = require('../middleware/headers');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 var transporter = require('../transport')
+
 //login user
 router.post('/login', validate, function(req, res){
     Donor.getOneDonor(req,res)
@@ -18,10 +19,35 @@ router.get("/", validate, function (req, res) {
   })
 
   //create donor
-router.post('/createdonor', function (req, res) {
-    Donor.createDonor(req, res)
-    
+router.post('/createdonor', function (req, res, next) {
+    Donor.createDonor(req, res, next)
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'iesha.musgrove@gmail.com',
+            pass: 'Victory!3395'
+        }
+        
+    })
+    const mailOptions = {
+        from: `${req.body.donor_email}`,
+        to: 'test-email@gmail.com',
+        subject: `${req.body.donor_fname}`,
+        text: `${req.body.message}`,
+        replyTo: `${req.body.donor_email}`
+    }
+    transporter.sendMail(mailOptions, function(err, res){
+        if(err){
+            console.error('there was an error: ', err);
+        }else{
+            console.log('here is teh res: ', res)
+        }
+    })
 })
+
+
+
+
 
 //edit donor
 router.put('/editdonor/:id', validate, function(req, res) {
