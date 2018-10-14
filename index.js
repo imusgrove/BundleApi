@@ -24,7 +24,9 @@ app.use(bodyParser.urlencoded({
 // app.use(require('./middleware/validate-session'));
 app.use('/user', require('./controllers/usercontroller'));
 app.use('/donor',  require('./controllers/donorcontroller'));
-app.use('/donation', require('./controllers/donationcontroller'));
+app.use('/donation', require('./controllers/donationcontroller')
+
+);
 
 
 require("./associations");
@@ -32,3 +34,38 @@ require("./associations");
 http.listen(process.env.PORT, () => {
     console.log(`server is listening on port ${process.env.PORT}`)
 });
+
+// nodemailer
+// houses the data to send in the email
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+  //   make true if using ssl certificate
+    secure: false,
+  //   stmp port
+    port: 25,
+    auth: {
+      user: 'iesha.musgrove@gmail.com',
+      pass: 'Victory3395'
+    },
+  //   protocol
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
+  // use to construct body of email
+  let HelperOptions = {
+    from: '"Iesha" <iesha.musgrove@gmail.com',
+    to: 'iesha.musgrove@gmail.com',
+    subject: 'dd',
+    text: 'dd'
+  };
+  
+  // contains callback data
+    transporter.sendMail(HelperOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log("The message was sent!");
+      console.log(info);
+    });
+  
