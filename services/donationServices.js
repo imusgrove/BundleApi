@@ -1,29 +1,31 @@
 const express = require("express");
 var sequelize = require('../db');
-const donation = sequelize.import('../models/donations')
+const donation = sequelize.import('../models/donations');
+const sendEmail = require('../sendEmail')
 
 //get all donations
 exports.getAll = function(req,res) {
     return donation.findAll()
     .then(
-        function findAllSuccess(data) {
-            res.json(data.map(datum => datum.toJSON()).map(obj => {
-                let customDonor = {id: 0, donationItem: '', donationAmount: 0}
-                customDonor.id = obj.id
-                delete obj.id
-                for(let key in obj) {
-                  if(obj[key] > 0) {
-                    customDonor.donationItem = key
-                    customDonor.donationAmount = obj[key]
-                    break;
-                  }
-                }
-                return customDonor
-              }));
-        },
-        function findAllError(err){
+        function createSuccess(donation) {
+            sendEmail({
+              from: test@gmail.com,
+              to: boss@gmail.com,
+              subject: req.body.donationOption + ' donation alert'
+              text: 'yay donations!\n' + JSON.stringify(donation) // you get the point...
+            }).then(function (info) {
+              res.json({
+                donation: donation
+              });
+            }).catch(function (err) {
+              res.status(500).send(err);
+              // or maybe you don't care that the email failed:
+              // res.status(200).send({message: 'donation sent, but email didn\'t'});
+            }); 
+          },
+          function createError(err){
             res.send(500, err.message);
-        }
+          } ;
     );
 }
 
@@ -70,14 +72,24 @@ exports.createDonation = function(req, res){
     return donation.create(newDonation)
     .then(
         function createSuccess(donation) {
-            res.json ({
+            sendEmail({
+              from: "iesha.musgrove@gmail.com",
+              to: "iesha.musgrove@gmail.com",
+              subject: req.body.donationOption + ' donation alert',
+              text: 'yay donations!\n' + JSON.stringify(donation) // you get the point...
+            }).then(function (info) {
+              res.json({
                 donation: donation
-            });  
-        },
-        function createError(err){
+              });
+            }).catch(function (err) {
+              res.status(500).send(err);
+              // or maybe you don't care that the email failed:
+              // res.status(200).send({message: 'donation sent, but email didn\'t'});
+            }); 
+          },
+          function createError(err){
             res.send(500, err.message);
-        },
-
+          },
     );
 }
 
@@ -132,3 +144,4 @@ exports.deleteDonation = function(req ,res){
         }
     );
 }
+

@@ -16,7 +16,7 @@ router.post('/createdonation', validate, function (req, res) {
         if (error) {
           return console.log(error);
         }
-        console.log("The message was sent!");
+        console.log("The donation was sent!");
         console.log(info);
       });
 });
