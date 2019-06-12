@@ -23,8 +23,8 @@ router.post('/createdonor', function (req, res, next) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'iesha.musgrove@gmail.com',
-            pass: 'Victory!3395'
+            user: '',
+            pass: ''
         }
         
     })
